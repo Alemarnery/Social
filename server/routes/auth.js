@@ -74,11 +74,11 @@ router.post(
     res.send("Bien recovery email");
   }
 );
-//Adentro de la App
 
+//Adentro de la App
 router.get("/logout", isExistingUser, (req, res) => {
   req.session.loggedIn = null;
-  res.redirect("/");
+  res.redirect("/login");
 });
 
 router.get("/protected", isExistingUser, (req, res) => {

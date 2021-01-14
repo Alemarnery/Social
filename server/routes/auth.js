@@ -1,24 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const { isExistingUser, isGuest } = require("./middlewares");
+const { isExistingUser, isGuest, handleErrors } = require("./middlewares");
 
-router.get("/", isGuest, (req, res) => {
-  res.send(`
-    <div>
-      <form method="POST" action="login">
-        <h1>Sign in</h1>
-          <div>
-            <label >Email</label>
-            <input required placeholder="Email" name="email" />
-          </div>
-          <div >
-            <label>Password</label>
-            <input placeholder="Password" required name="password" type="password"/>
-          </div>
-        <button>Submit</button>
-      </form>
-    </div> 
-`);
+const loginTemplate = require("../views/auth/Login");
+const registerTemplate = require("../views/auth/register");
+const forgotTemplate = require("../views/auth/forgot");
+
+const {
+  requireEmail,
+  requirePassword,
+  requireName,
+  requireDate,
+} = require("./validators");
+
+router.get("/login", isGuest, (req, res) => {
+  res.send(loginTemplate({}));
 });
 
 const bodyParserManual = (req, res, next) => {
@@ -39,15 +35,46 @@ const bodyParserManual = (req, res, next) => {
   }
 };
 
-router.post("/login", bodyParserManual, (req, res) => {
-  console.log(req.alemar);
-  const { email, password } = req.alemar;
-  req.session.loggedIn = true;
+router.post(
+  "/login",
+  [requireEmail, requirePassword],
+  handleErrors(loginTemplate),
+  (req, res) => {
+    const { email, password } = req.body;
 
-  console.log(`email ${email} password ${password}`);
+    req.session.loggedIn = true;
 
-  res.redirect("/protected");
+    console.log(`email ${email} password ${password}`);
+    res.redirect("/protected");
+  }
+);
+
+router.get("/register", isGuest, (req, res) => {
+  res.send(registerTemplate({}));
 });
+
+router.post(
+  "/register",
+  [requireEmail, requirePassword, requireName, requireDate],
+  handleErrors(registerTemplate),
+  (req, res) => {
+    res.send(`hola`);
+  }
+);
+
+router.get("/forgot", isGuest, (req, res) => {
+  res.send(forgotTemplate({}));
+});
+
+router.post(
+  "/forgot",
+  [requireEmail],
+  handleErrors(forgotTemplate),
+  (req, res) => {
+    res.send("Bien recovery email");
+  }
+);
+//Adentro de la App
 
 router.get("/logout", isExistingUser, (req, res) => {
   req.session.loggedIn = null;
@@ -61,14 +88,6 @@ router.get("/protected", isExistingUser, (req, res) => {
                <a href='/logout'>Logout</a>
           </div>         
           `);
-});
-
-router.get("/register", (req, res) => {
-  res.send("Registro");
-});
-
-router.get("/forgot", (req, res) => {
-  res.send("Recuperar contrasena");
 });
 
 module.exports = router;

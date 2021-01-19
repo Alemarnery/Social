@@ -11,7 +11,7 @@ module.exports = ({ errors }) => {
                               <label>Email</label>
                               <input type="text" name="email" placeholder="Email">                        
                          </div>
-                         ${errors ? nameError("email", errors) : ""}
+                         ${nameError("email", errors)}
 
                          <button class="ui button" type="submit">Submit</button>
                     </form>`,

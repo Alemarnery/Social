@@ -7,9 +7,13 @@ function getError(errors, prop) {
 }
 
 function nameError(input_name, errors) {
-  return `<div class="ui error message">
-    ${getError(errors, input_name)}
-  </div>`;
+  if (getError(errors, input_name)) {
+    return `<div class="ui error message">
+      ${getError(errors, input_name)}
+    </div>`;
+  } else {
+    return "";
+  }
 }
 
 module.exports = {

@@ -6,6 +6,8 @@ const loginTemplate = require("../views/auth/Login");
 const registerTemplate = require("../views/auth/register");
 const forgotTemplate = require("../views/auth/forgot");
 
+const User = require("../src/database/models/user");
+
 const {
   requireEmail,
   requirePassword,
@@ -17,34 +19,26 @@ router.get("/login", isGuest, (req, res) => {
   res.send(loginTemplate({}));
 });
 
-const bodyParserManual = (req, res, next) => {
-  if (req.method === "POST") {
-    req.on("data", (data) => {
-      const dataTraducida = data.toString("utf8").split("&");
-
-      const resultante = {};
-      for (let pair of dataTraducida) {
-        const [key, value] = pair.split("=");
-        resultante[key] = value;
-      }
-      req.alemar = resultante;
-      next();
-    });
-  } else {
-    next();
-  }
-};
-
 router.post(
   "/login",
   [requireEmail, requirePassword],
   handleErrors(loginTemplate),
-  (req, res) => {
+  async (req, res) => {
     const { email, password } = req.body;
 
-    req.session.loggedIn = true;
+    const user = await User.findOne({ email, password });
+    if (!user) {
+      return res.status(400).send("email or password arent correct!");
+    }
 
-    console.log(`email ${email} password ${password}`);
+    req.session.loggedIn = true;
+    req.session.id = user._id;
+
+    console.log(
+      `id is: ${user._id},
+      email is: ${email},
+      password is: ${password}`
+    );
     res.redirect("/protected");
   }
 );
@@ -57,8 +51,17 @@ router.post(
   "/register",
   [requireEmail, requirePassword, requireName, requireDate],
   handleErrors(registerTemplate),
-  (req, res) => {
-    res.send(`hola`);
+  async (req, res) => {
+    console.log(res);
+    const { email } = req.body;
+    const userExist = await User.findOne({ email });
+
+    if (userExist) {
+      return res.status(400).send("User already exist!");
+    }
+
+    new User(req.body).save();
+    res.send(`User has been successfully created!!`);
   }
 );
 
@@ -70,21 +73,27 @@ router.post(
   "/forgot",
   [requireEmail],
   handleErrors(forgotTemplate),
-  (req, res) => {
-    res.send("Bien recovery email");
+  async (req, res) => {
+    const { email } = req.body;
+
+    const userExist = await User.findOne({ email });
+
+    userExist ? res.send("User exist!!!") : res.send("email doesn't exist");
   }
 );
 
 //Adentro de la App
 router.get("/logout", isExistingUser, (req, res) => {
   req.session.loggedIn = null;
+  req.session.id = null;
   res.redirect("/login");
 });
 
 router.get("/protected", isExistingUser, (req, res) => {
   res.send(`
           <div>
-               <div>RUTA PROTEGIDA</div>
+               <h3>RUTA PROTEGIDA</h3>
+               <h5> The userId is: ${req.session.id}</h5>
                <a href='/logout'>Logout</a>
           </div>         
           `);

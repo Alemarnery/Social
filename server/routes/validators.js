@@ -17,7 +17,7 @@ module.exports = {
     .notEmpty()
     .withMessage("Name must not be empty"),
 
-  requireDate: check("date")
+  requireDate: check("birthDay")
     .isISO8601()
     .toDate()
     .withMessage("Name must not be empty"),

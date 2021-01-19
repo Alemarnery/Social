@@ -42,10 +42,6 @@ mongoose.connection
   })
   .on("error", (error) => console.warn("Warning", error));
 
-const users = new User({ name: "alem" });
-
-users.save();
-
 //***Firebase
 // const firebaseConfig = {
 //   apiKey: "AIzaSyDyCU5HUy_lBrNbTGL0Mpbm9py-5qrb8PU",

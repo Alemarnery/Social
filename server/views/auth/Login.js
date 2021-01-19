@@ -9,15 +9,13 @@ module.exports = ({ errors }) => {
                          <label>Email</label>
                          <input type="text" name="email" placeholder="email"> 
                     </div>
-                    ${
-                      errors ? nameError("email", errors) : ""
-                    }                     
+                    ${nameError("email", errors)}                     
 
                     <div class="required field">
                          <label>Password</label>
                          <input type="text" name="password" placeholder="password" type="password" >
                     </div>
-                    ${errors ? nameError("password", errors) : ""}  
+                    ${nameError("password", errors)}  
                     
                     <button class="ui button" type="submit">Submit</button>
                </form>`,

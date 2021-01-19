@@ -6,20 +6,32 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  lasName: {
+  lastName: {
     type: String,
   },
   email: {
     type: String,
-    //required: true,
+    required: true,
+    validate: {
+      validator: async function (email) {
+        const user = await this.constructor.findOne({ email });
+        if (user) {
+          if (this.id === user.id) {
+            return true;
+          }
+          return false;
+        }
+      },
+      message: (props) => "The specified email address is already in use.",
+    },
   },
   password: {
     type: String,
-    //required: true,
+    required: true,
   },
   birthDay: {
     type: Date,
-    //required: true,
+    required: true,
   },
 });
 

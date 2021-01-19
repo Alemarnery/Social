@@ -13,6 +13,7 @@ module.exports = ({ header, content, extraContent }) => {
                   <link rel="stylesheet" href="/style.css"></link>
                </head>
                <body>
+               
                     <div class="ui container">
                          <div class="ui middle aligned two column centered grid">
                               <div class="ui card column">
@@ -28,7 +29,29 @@ module.exports = ({ header, content, extraContent }) => {
                               </div>
                          </div>             
                     </div>
-               </body>
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </body>
           </html>
      `;
 };

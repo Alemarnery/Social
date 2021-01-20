@@ -8,11 +8,10 @@ const dbname = "socialDb";
 const userName = "alem_social";
 const password = "DJKX3MaltuxYYYyn";
 const MONGO_URI = `mongodb+srv://${userName}:${password}@cluster0.ll51q.mongodb.net/${dbname}?retryWrites=true&w=majority`;
-const User = require("./database/models/user");
 
 const firebase = require("firebase");
 
-const auth = require("../routes/auth");
+const auth = require("./routes/auth");
 
 const app = express();
 

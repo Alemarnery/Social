@@ -6,7 +6,7 @@ const loginTemplate = require("../views/auth/Login");
 const registerTemplate = require("../views/auth/register");
 const forgotTemplate = require("../views/auth/forgot");
 
-const User = require("../src/database/models/user");
+const User = require("../database/model/user");
 
 const {
   requireEmail,
@@ -52,7 +52,6 @@ router.post(
   [requireEmail, requirePassword, requireName, requireDate],
   handleErrors(registerTemplate),
   async (req, res) => {
-    console.log(res);
     const { email } = req.body;
     const userExist = await User.findOne({ email });
 

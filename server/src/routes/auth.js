@@ -1,6 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { isExistingUser, isGuest, handleErrors } = require("./middlewares");
+const {
+  isExistingUser,
+  isGuest,
+  handleErrors,
+  userLogin,
+} = require("./middlewares");
 
 const loginTemplate = require("../views/auth/Login");
 const registerTemplate = require("../views/auth/register");
@@ -27,17 +32,8 @@ router.post(
   "/login",
   [requireEmail, requirePassword],
   handleErrors(loginTemplate),
+  userLogin,
   async (req, res) => {
-    const { email, password } = req.body;
-
-    const user = await User.findOne({ email, password });
-    if (!user) {
-      return res.status(400).send("email or password arent correct!");
-    }
-
-    req.session.loggedIn = true;
-    req.session.id = user._id;
-
     res.redirect("/protected");
   }
 );

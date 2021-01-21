@@ -4,7 +4,8 @@ const { nameError } = require("../helpers");
 module.exports = ({ errors }) => {
   return layout({
     header: "Sign In",
-    content: `<form class="ui form error" method="POST" action="login">
+    content: ` ${nameError("errorDb", errors)}    
+               <form class="ui form error" method="POST" action="login">
                     <div class="required field">
                          <label>Email</label>
                          <input type="text" name="email" placeholder="email"> 

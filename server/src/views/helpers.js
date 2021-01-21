@@ -6,14 +6,17 @@ function getError(errors, prop) {
   }
 }
 
-function nameError(input_name, errors) {
-  if (getError(errors, input_name)) {
+function nameError(prop, errors) {
+  console.log(errors);
+  const errorMessage = getError(errors, prop);
+  console.log(errorMessage);
+  if (errorMessage) {
     return `<div class="ui error message">
-      ${getError(errors, input_name)}
+      ${errorMessage}
     </div>`;
-  } else {
-    return "";
   }
+
+  return "";
 }
 
 module.exports = {

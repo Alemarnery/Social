@@ -1,3 +1,5 @@
+const { nameError } = require("../helpers");
+
 module.exports = ({ header, content, extraContent }) => {
   return `
      <!DOCTYPE html>
@@ -12,8 +14,7 @@ module.exports = ({ header, content, extraContent }) => {
                   />
                   <link rel="stylesheet" href="/style.css"></link>
                </head>
-               <body>
-               
+               <body>               
                     <div class="ui container">
                          <div class="ui middle aligned two column centered grid">
                               <div class="ui card column">
@@ -21,6 +22,7 @@ module.exports = ({ header, content, extraContent }) => {
                                         <div class="header">${header}</div>
                                    </div>
                                    <div class="content">
+                                    
                                         ${content} 
                                    </div> 
                                    <div class="extra content">

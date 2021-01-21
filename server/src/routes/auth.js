@@ -8,11 +8,15 @@ const forgotTemplate = require("../views/auth/forgot");
 
 const User = require("../database/model/user");
 
+const { createUser } = require("../actions/authQueries");
+
 const {
   requireEmail,
   requirePassword,
   requireName,
   requireDate,
+  emailExist,
+  forgotEmail,
 } = require("./validators");
 
 router.get("/login", isGuest, (req, res) => {
@@ -34,11 +38,6 @@ router.post(
     req.session.loggedIn = true;
     req.session.id = user._id;
 
-    console.log(
-      `id is: ${user._id},
-      email is: ${email},
-      password is: ${password}`
-    );
     res.redirect("/protected");
   }
 );
@@ -49,18 +48,15 @@ router.get("/register", isGuest, (req, res) => {
 
 router.post(
   "/register",
-  [requireEmail, requirePassword, requireName, requireDate],
+  [requireEmail, emailExist, requirePassword, requireName, requireDate],
   handleErrors(registerTemplate),
   async (req, res) => {
-    const { email } = req.body;
-    const userExist = await User.findOne({ email });
+    const newUser = await createUser(req.body);
 
-    if (userExist) {
-      return res.status(400).send("User already exist!");
-    }
+    req.session.loggedIn = true;
+    req.session.id = newUser._id;
 
-    new User(req.body).save();
-    res.send(`User has been successfully created!!`);
+    res.redirect("/protected");
   }
 );
 
@@ -70,14 +66,10 @@ router.get("/forgot", isGuest, (req, res) => {
 
 router.post(
   "/forgot",
-  [requireEmail],
+  [requireEmail, forgotEmail],
   handleErrors(forgotTemplate),
   async (req, res) => {
-    const { email } = req.body;
-
-    const userExist = await User.findOne({ email });
-
-    userExist ? res.send("User exist!!!") : res.send("email doesn't exist");
+    res.send("User exist!!!");
   }
 );
 

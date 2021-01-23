@@ -7,9 +7,7 @@ function getError(errors, prop) {
 }
 
 function nameError(prop, errors) {
-  console.log(errors);
   const errorMessage = getError(errors, prop);
-  console.log(errorMessage);
   if (errorMessage) {
     return `<div class="ui error message">
       ${errorMessage}
@@ -19,6 +17,13 @@ function nameError(prop, errors) {
   return "";
 }
 
+function flashError(error) {
+  return `<div class="ui error message">
+            ${error}
+          </div>`;
+}
+
 module.exports = {
   nameError,
+  flashError,
 };

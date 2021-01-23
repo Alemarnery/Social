@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
+const flash = require("connect-flash");
 
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
@@ -24,6 +25,8 @@ app.use(
     keys: ["ddfdfrfrf"],
   })
 );
+
+app.use(flash());
 
 app.use(auth);
 

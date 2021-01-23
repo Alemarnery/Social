@@ -1,6 +1,7 @@
 const { validationResult } = require("express-validator");
 const User = require("../database/model/user");
 const loginTemplate = require("../views/auth/Login");
+const flash = require("connect-flash");
 
 const middlewares = {
   handleErrors(templateFunc) {
@@ -22,19 +23,8 @@ const middlewares = {
       req.session.loggedIn = true;
       req.session.id = user._id;
     } else {
-      const errors = [
-        {
-          value: "",
-          msg: "email or password are not correct",
-          param: "errorDb",
-          location: "body",
-        },
-      ];
-
-      //**TODO
-
-      //El error no se muestra, porque se le debe ensenar a validationResult la existencia de este nuevo error
-      return res.send(loginTemplate({ errors }));
+      req.flash("error", "email or password is not correct!");
+      return res.send(loginTemplate({ dbError: req.flash("error") }));
     }
     next();
   },

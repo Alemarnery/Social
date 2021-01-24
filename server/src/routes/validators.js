@@ -18,6 +18,16 @@ module.exports = {
       }
     }),
 
+  // emailAndPasswordExist: check(["email", "password"]).custom(
+  //   async (value, req) => {
+  //     console.log(value, req);
+  //     // const userExist = await User.findOne({ email, password });
+  //     // if (userExist) {
+  //     //   throw new Error("error");
+  //     // }
+  //   }
+  // ),
+
   forgotEmail: check("email")
     .isEmail()
     .withMessage("Mus be a valid email")

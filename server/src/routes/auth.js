@@ -11,8 +11,6 @@ const loginTemplate = require("../views/auth/Login");
 const registerTemplate = require("../views/auth/register");
 const forgotTemplate = require("../views/auth/forgot");
 
-const User = require("../database/model/user");
-
 const { createUser } = require("../actions/authQueries");
 
 const {
@@ -34,7 +32,7 @@ router.post(
   handleErrors(loginTemplate),
   userLogin,
   async (req, res) => {
-    res.redirect("/protected");
+    res.redirect("/");
   }
 );
 
@@ -48,11 +46,7 @@ router.post(
   handleErrors(registerTemplate),
   async (req, res) => {
     const newUser = await createUser(req.body);
-
-    req.session.loggedIn = true;
-    req.session.id = newUser._id;
-
-    res.redirect("/protected");
+    res.redirect("/login");
   }
 );
 
@@ -76,7 +70,7 @@ router.get("/logout", isExistingUser, (req, res) => {
   res.redirect("/login");
 });
 
-router.get("/protected", isExistingUser, (req, res) => {
+router.get("/", isExistingUser, (req, res) => {
   res.send(`
           <div>
                <h3>RUTA PROTEGIDA</h3>

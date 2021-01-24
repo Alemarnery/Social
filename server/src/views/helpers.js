@@ -1,4 +1,4 @@
-function getError(errors, prop) {
+function getError(prop, errors) {
   try {
     return errors.mapped()[prop].msg;
   } catch (err) {
@@ -7,23 +7,15 @@ function getError(errors, prop) {
 }
 
 function nameError(prop, errors) {
-  const errorMessage = getError(errors, prop);
+  const errorMessage = prop ? getError(prop, errors) : errors;
   if (errorMessage) {
     return `<div class="ui error message">
       ${errorMessage}
     </div>`;
   }
-
   return "";
-}
-
-function flashError(error) {
-  return `<div class="ui error message">
-            ${error}
-          </div>`;
 }
 
 module.exports = {
   nameError,
-  flashError,
 };

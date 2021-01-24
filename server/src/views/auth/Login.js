@@ -1,10 +1,11 @@
 const layout = require("./layout");
-const { nameError, flashError } = require("../helpers");
+const { nameError } = require("../helpers");
 
 module.exports = ({ errors, dbError }) => {
+  console.log(errors);
   return layout({
     header: "Sign In",
-    content: ` ${dbError ? flashError(dbError) : ""} 
+    content: `${dbError ? nameError(null, dbError) : ""} 
           
                <form class="ui form error" method="POST" action="login">
                     <div class="required field">
@@ -15,7 +16,7 @@ module.exports = ({ errors, dbError }) => {
 
                     <div class="required field">
                          <label>Password</label>
-                         <input type="text" name="password" placeholder="password" type="password" >
+                         <input type="password" name="password" placeholder="password" type="password" >
                     </div>
                     ${nameError("password", errors)}  
                     

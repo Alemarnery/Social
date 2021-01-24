@@ -9,4 +9,6 @@ async function createUser(userData) {
   }
 }
 
+//Colocar aqui el de find
+
 module.exports = { createUser };

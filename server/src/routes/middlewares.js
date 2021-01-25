@@ -1,7 +1,6 @@
 const { validationResult } = require("express-validator");
-const User = require("../database/model/user");
 const loginTemplate = require("../views/auth/Login");
-const flash = require("connect-flash");
+const { findUserByEmailAndPassword } = require("../actions/authQueries");
 
 const middlewares = {
   handleErrors(templateFunc) {
@@ -17,13 +16,15 @@ const middlewares = {
   },
 
   userLogin: async function (req, res, next) {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email, password });
+    const user = await findUserByEmailAndPassword(req.body);
     if (user) {
       req.session.loggedIn = true;
       req.session.id = user._id;
     } else {
-      req.flash("error", "email or password is not correct!");
+      req.flash(
+        "error",
+        " There was a problem loggin in. Check your email and password or create an account!"
+      );
       return res.send(loginTemplate({ dbError: req.flash("error") }));
     }
     next();

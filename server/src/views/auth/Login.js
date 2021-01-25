@@ -2,7 +2,6 @@ const layout = require("./layout");
 const { nameError } = require("../helpers");
 
 module.exports = ({ errors, dbError }) => {
-  console.log(errors);
   return layout({
     header: "Sign In",
     content: `${dbError ? nameError(null, dbError) : ""} 

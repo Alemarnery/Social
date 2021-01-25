@@ -1,5 +1,5 @@
 const { check } = require("express-validator");
-const User = require("../database/model/user");
+const { findUserByEmail } = require("../actions/authQueries");
 
 module.exports = {
   requireEmail: check("email")
@@ -12,29 +12,9 @@ module.exports = {
     .isEmail()
     .withMessage("Must be a valid email")
     .custom(async (email) => {
-      const userExist = await User.findOne({ email });
+      const userExist = await findUserByEmail(email);
       if (userExist) {
         throw new Error("Email already in use");
-      }
-    }),
-
-  // emailAndPasswordExist: check(["email", "password"]).custom(
-  //   async (value, req) => {
-  //     console.log(value, req);
-  //     // const userExist = await User.findOne({ email, password });
-  //     // if (userExist) {
-  //     //   throw new Error("error");
-  //     // }
-  //   }
-  // ),
-
-  forgotEmail: check("email")
-    .isEmail()
-    .withMessage("Mus be a valid email")
-    .custom(async (email) => {
-      const userExist = await User.findOne({ email });
-      if (!userExist) {
-        throw new Error("email doesn't exist");
       }
     }),
 
@@ -53,5 +33,12 @@ module.exports = {
   requireDate: check("birthDay")
     .isISO8601()
     .toDate()
-    .withMessage("Name must not be empty"),
+    .withMessage("Date must not be empty")
+    .custom((date) => {
+      let todayDate = new Date();
+      if (date > todayDate) {
+        throw new Error("Invalid date of Birth");
+      }
+      return true;
+    }),
 };

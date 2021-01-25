@@ -19,7 +19,6 @@ const {
   requireName,
   requireDate,
   emailExist,
-  forgotEmail,
 } = require("./validators");
 
 router.get("/login", isGuest, (req, res) => {
@@ -56,10 +55,14 @@ router.get("/forgot", isGuest, (req, res) => {
 
 router.post(
   "/forgot",
-  [requireEmail, forgotEmail],
+  [requireEmail],
   handleErrors(forgotTemplate),
   async (req, res) => {
-    res.send("User exist!!!");
+    req.flash(
+      "successEmail",
+      "You should soon receive an email allowing you to reset your password. Please make sure to check your spam and trash if you can’t find the email"
+    );
+    return res.send(forgotTemplate({ email: req.flash("successEmail") }));
   }
 );
 

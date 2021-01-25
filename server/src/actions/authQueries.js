@@ -9,6 +9,16 @@ async function createUser(userData) {
   }
 }
 
-//Colocar aqui el de find
+async function findUserByEmailAndPassword(data) {
+  const { email, password } = data;
+  const user = await User.findOne({ email, password });
+  return user;
+}
 
-module.exports = { createUser };
+async function findUserByEmail(email) {
+  const userExist = await User.findOne({ email });
+  return userExist;
+}
+
+//Colocar aqui el de find
+module.exports = { createUser, findUserByEmailAndPassword, findUserByEmail };

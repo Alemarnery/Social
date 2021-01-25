@@ -1,10 +1,13 @@
 const layout = require("./layout");
 const { nameError } = require("../helpers");
 
-module.exports = ({ errors }) => {
+module.exports = ({ errors, email }) => {
   return layout({
     header: "Recovery your password",
-    content: `<form class="ui form error" method="POST" action="forgot">
+    content: `
+                  ${nameError(null, email, "positive")}  
+                  
+                  <form class="ui form error" method="POST" action="forgot">
                     <h5>Enter your email to recovery your password</h5>                  
 
                          <div class="required field">

@@ -6,11 +6,11 @@ function getError(prop, errors) {
   }
 }
 
-function nameError(prop, errors) {
-  const errorMessage = prop ? getError(prop, errors) : errors;
-  if (errorMessage) {
-    return `<div class="ui error message">
-      ${errorMessage}
+function nameError(prop, errors, className = "error") {
+  const message = prop ? getError(prop, errors) : errors;
+  if (message) {
+    return `<div class="ui ${className} message">
+      ${message}
     </div>`;
   }
   return "";

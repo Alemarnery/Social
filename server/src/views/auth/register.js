@@ -34,7 +34,7 @@ module.exports = ({ errors }) => {
                          <label>Date of Birth</label>
                          <input type="date" name="birthDay" placeholder="Date of Birth" type="date">
                     </div>
-                    ${nameError("date", errors)}
+                    ${nameError("birthDay", errors)}
                          <button class="ui button" type="submit">Submit</button>
                </form>`,
     extraContent: `<a href="/login"><i class="user icon"></i> Already have an account? Sign In</a>`,

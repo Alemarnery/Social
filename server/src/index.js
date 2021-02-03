@@ -57,19 +57,10 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-// Get a reference to the database service
-const database = firebase.database();
-
-const usersRef = database.ref("users");
-
-usersRef.on("value", (snach) => {
-  console.log(snach.val());
-});
-
 app.listen(3000, () => {
   console.log("localhost 3000");
 });
 
-//Como manejar el cambio de db (cuando estoy trabajando con mongo o firebase).
 // el inicio de sesion en las redes solo sirve cuando la db es firebase?
-//Inicio de sesion https://firebase.google.com/docs/auth/web/password-auth?hl=es
+
+//Autenticacion https://firebase.google.com/docs/auth/web/password-auth?hl=es

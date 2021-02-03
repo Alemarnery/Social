@@ -17,6 +17,7 @@ const middlewares = {
 
   userLogin: async function (req, res, next) {
     const user = await findUserByEmailAndPassword(req.body);
+    console.log(`desde middlewares ${user} `);
     if (user) {
       req.session.loggedIn = true;
       req.session.id = user._id;

@@ -11,7 +11,8 @@ const password = "DJKX3MaltuxYYYyn";
 const MONGO_URI = `mongodb+srv://${userName}:${password}@cluster0.ll51q.mongodb.net/${dbname}?retryWrites=true&w=majority`;
 
 const firebase = require("firebase");
-//const firebaseui = require("firebaseui");
+const firebaseui = require("firebaseui");
+console.log(firebaseui);
 
 const auth = require("./routes/auth");
 
@@ -59,7 +60,7 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 // Initialize the FirebaseUI Widget using Firebase.
-//const ui = new firebaseui.auth.AuthUI(firebase.auth());
+const ui = new firebaseui.auth.AuthUI(firebase.auth());
 
 // Get a reference to the database service
 const database = firebase.database();
@@ -76,4 +77,3 @@ app.listen(3000, () => {
 
 //Como manejar el cambio de db (cuando estoy trabajando con mongo o firebase).
 // el inicio de sesion en las redes solo sirve cuando la db es firebase?
-//Para habilitar los metodos de inicio de sesion https://firebase.google.com/docs/auth/android/firebaseui?hl=es

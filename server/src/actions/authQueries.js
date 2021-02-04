@@ -2,7 +2,7 @@ const User = require("../database/model/user");
 const firebase = require("firebase");
 
 async function createUser(userData) {
-  /**Mongooo*/
+  /**Mongo*/
 
   // try {
   //   const user = await new User(userData).save();
@@ -35,12 +35,12 @@ async function createUser(userData) {
 
 async function findUserByEmailAndPassword(data) {
   const { email, password } = data;
-  /**Mongooo*/
+  /**Mongo*/
   //const user = await User.findOne({ email, password });
   //return user._id;
 
   /**Firebase*/
-  const user = await firebase
+  const user = firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then((user) => {
@@ -54,7 +54,23 @@ async function findUserByEmailAndPassword(data) {
 }
 
 async function findUserByEmail(email) {
-  const userExist = await User.findOne({ email });
+  /**Mongo*/
+  // const userExist = await User.findOne({ email });
+  // return userExist;
+
+  /**Firebase*/
+  const userExist = firebase
+    .auth()
+    .fetchSignInMethodsForEmail(email)
+    .then((userRecord) => {
+      const [user] = userRecord;
+      user === "password" ? 1 : null;
+      return user;
+    })
+    .catch((error) => {
+      return error;
+    });
+
   return userExist;
 }
 

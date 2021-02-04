@@ -8,17 +8,15 @@ module.exports = {
     .isEmail()
     .withMessage("Must be a valid email"),
 
-  //**Lo comente porque estoy trabajando con firebase
-
-  // emailExist: check("email")
-  //   .isEmail()
-  //   .withMessage("Must be a valid email")
-  //   .custom(async (email) => {
-  //     const userExist = await findUserByEmail(email);
-  //     if (userExist) {
-  //       throw new Error("Email already in use");
-  //     }
-  //   }),
+  emailExist: check("email")
+    .isEmail()
+    .withMessage("Must be a valid email")
+    .custom(async (email) => {
+      const userExist = await findUserByEmail(email);
+      if (userExist) {
+        throw new Error("Email already in use");
+      }
+    }),
 
   requirePassword: check("password")
     .trim()

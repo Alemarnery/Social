@@ -41,17 +41,11 @@ router.get("/register", isGuest, (req, res) => {
 
 router.post(
   "/register",
-  [
-    requireEmail,
-    //emailExist,
-    requirePassword,
-    requireName,
-    requireDate,
-  ],
+  [requireEmail, emailExist, requirePassword, requireName, requireDate],
   handleErrors(registerTemplate),
   async (req, res) => {
-    console.log(req.body);
     await createUser(req.body);
+
     res.redirect("/login");
   }
 );

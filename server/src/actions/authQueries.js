@@ -40,17 +40,17 @@ async function findUserByEmailAndPassword(data) {
   //return user._id;
 
   /**Firebase*/
-  await firebase
+  const user = await firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
-    .then(() => {
-      const user = firebase.auth().currentUser;
-      const { uid } = user;
+    .then((user) => {
+      return user;
     })
     .catch((error) => {
-      console.log(error);
       return error;
     });
+
+  return user;
 }
 
 async function findUserByEmail(email) {

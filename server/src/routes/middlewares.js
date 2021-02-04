@@ -1,6 +1,7 @@
 const { validationResult } = require("express-validator");
 const loginTemplate = require("../views/auth/Login");
 const { findUserByEmailAndPassword } = require("../actions/authQueries");
+const firebase = require("firebase");
 
 const middlewares = {
   handleErrors(templateFunc) {
@@ -16,11 +17,25 @@ const middlewares = {
   },
 
   userLogin: async function (req, res, next) {
-    const user = await findUserByEmailAndPassword(req.body);
-    console.log(`desde middlewares ${user} `);
-    if (user) {
+    /**Mongo**/
+    // const user = await findUserByEmailAndPassword(req.body);
+    // if (user) {
+    //   req.session.loggedIn = true;
+    //   req.session.id = user._id;
+    // } else {
+    //   req.flash(
+    //     "error",
+    //     " There was a problem loggin in. Check your email and password or create an account!"
+    //   );
+    //   return res.send(loginTemplate({ dbError: req.flash("error") }));
+    // }
+
+    /**Firebase**/
+    await findUserByEmailAndPassword(req.body);
+    const singIn = firebase.auth().currentUser;
+    if (singIn) {
       req.session.loggedIn = true;
-      req.session.id = user._id;
+      req.session.id = singIn.uid;
     } else {
       req.flash(
         "error",
@@ -28,6 +43,7 @@ const middlewares = {
       );
       return res.send(loginTemplate({ dbError: req.flash("error") }));
     }
+
     next();
   },
 

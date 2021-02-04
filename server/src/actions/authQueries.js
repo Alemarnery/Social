@@ -3,7 +3,6 @@ const firebase = require("firebase");
 
 async function createUser(userData) {
   /**Mongo*/
-
   // try {
   //   const user = await new User(userData).save();
   //   return user;

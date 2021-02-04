@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const firebase = require("firebase");
 const {
   isExistingUser,
   isGuest,
@@ -69,6 +70,7 @@ router.post(
 
 //Adentro de la App
 router.get("/logout", isExistingUser, (req, res) => {
+  firebase.auth().signOut();
   req.session.loggedIn = null;
   req.session.id = null;
   res.redirect("/login");

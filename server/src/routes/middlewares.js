@@ -56,9 +56,8 @@ const middlewares = {
 
   isGuest: function (req, res, next) {
     if (req.session.loggedIn) {
-      return res.redirect("/protected");
+      return res.redirect("/");
     }
-
     next();
   },
 };

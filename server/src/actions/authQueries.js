@@ -61,11 +61,7 @@ async function findUserByEmail(email) {
   const userExist = firebase
     .auth()
     .fetchSignInMethodsForEmail(email)
-    .then((userRecord) => {
-      const [user] = userRecord;
-      user === "password" ? 1 : null;
-      return user;
-    })
+    .then(([userRecord]) => userRecord === "password")
     .catch((error) => {
       return error;
     });

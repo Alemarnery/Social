@@ -1,5 +1,4 @@
 const { check } = require("express-validator");
-const { findUserByEmail } = require("../actions/authQueries");
 
 module.exports = {
   requireEmail: check("email")
@@ -7,16 +6,6 @@ module.exports = {
     .normalizeEmail()
     .isEmail()
     .withMessage("Must be a valid email"),
-
-  emailExist: check("email")
-    .isEmail()
-    .withMessage("Must be a valid email")
-    .custom(async (email) => {
-      const userExist = await findUserByEmail(email);
-      if (userExist) {
-        throw new Error("Email already in use");
-      }
-    }),
 
   requirePassword: check("password")
     .trim()

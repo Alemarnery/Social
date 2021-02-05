@@ -1,7 +1,7 @@
 const layout = require("./layout");
 const { nameError } = require("../helpers");
 
-module.exports = ({ errors }) => {
+module.exports = ({ errors, email }) => {
   return layout({
     header: "Register",
     content: `<form class="ui equal width form error" method="POST" action="register">
@@ -23,6 +23,7 @@ module.exports = ({ errors }) => {
                          <input type="text" name="email" placeholder="Email">                            
                     </div>
                     ${nameError("email", errors)}
+                    ${nameError(null, email)}
 
                     <div class="required field">
                          <label>Password</label>

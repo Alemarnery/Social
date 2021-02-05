@@ -6,6 +6,7 @@ const {
   isGuest,
   handleErrors,
   userLogin,
+  emailExist,
 } = require("./middlewares");
 
 const loginTemplate = require("../views/auth/Login");
@@ -19,7 +20,6 @@ const {
   requirePassword,
   requireName,
   requireDate,
-  emailExist,
 } = require("./validators");
 
 router.get("/login", isGuest, (req, res) => {
@@ -42,11 +42,11 @@ router.get("/register", isGuest, (req, res) => {
 
 router.post(
   "/register",
-  [requireEmail, emailExist, requirePassword, requireName, requireDate],
+  [requireEmail, requirePassword, requireName, requireDate],
   handleErrors(registerTemplate),
+  emailExist,
   async (req, res) => {
     await createUser(req.body);
-
     res.redirect("/login");
   }
 );

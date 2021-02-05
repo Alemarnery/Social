@@ -1,6 +1,10 @@
 const { validationResult } = require("express-validator");
 const loginTemplate = require("../views/auth/Login");
-const { findUserByEmailAndPassword } = require("../actions/authQueries");
+const registerTemplate = require("../views/auth/register");
+const {
+  findUserByEmailAndPassword,
+  findUserByEmail,
+} = require("../actions/authQueries");
 const firebase = require("firebase");
 
 const middlewares = {
@@ -44,6 +48,16 @@ const middlewares = {
       return res.send(loginTemplate({ dbError: req.flash("error") }));
     }
 
+    next();
+  },
+
+  emailExist: async function (req, res, next) {
+    const { email } = req.body;
+    const userExist = await findUserByEmail(email);
+    if (userExist) {
+      req.flash("errorEmail", "Email already in use");
+      return res.send(registerTemplate({ email: req.flash("errorEmail") }));
+    }
     next();
   },
 

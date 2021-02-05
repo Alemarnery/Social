@@ -69,5 +69,4 @@ async function findUserByEmail(email) {
   return userExist;
 }
 
-//Colocar aqui el de find
 module.exports = { createUser, findUserByEmailAndPassword, findUserByEmail };

@@ -8,10 +8,10 @@ module.exports = ({ errors, dbError }) => {
                <form class="ui form error" method="POST" action="login">
 
                     <div class="field center aligned">
-                         <button class="ui negative basic button">
+                         <a class="ui negative basic button" href="/googleSingIn">
                               <i class="google  icon"></i>
                               Google 
-                         </button>
+                         </a>
           
           
                          <button class="ui secondary basic button">
@@ -46,21 +46,7 @@ module.exports = ({ errors, dbError }) => {
                                         
                     <button class="ui button" type="submit">Submit</button>
                </form>`,
-    extraContent: `
-
-
-
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <a href="/register">
+    extraContent: ` <a href="/register">
                          <i class="user icon"></i>
                          Don't have an account?
                     </a>

@@ -1,5 +1,6 @@
 const layout = require("./layout");
 const { nameError } = require("../helpers");
+const { googleLogin } = require("../../js/socialLogin");
 
 module.exports = ({ errors, dbError }) => {
   return layout({
@@ -8,28 +9,25 @@ module.exports = ({ errors, dbError }) => {
                <form class="ui form error" method="POST" action="login">
 
                     <div class="field center aligned">
-                         <a class="ui negative basic button" href="/googleSingIn">
+                         <a class="ui negative basic button" id='googleLogin' onClick='${googleLogin()}  '>
                               <i class="google  icon"></i>
                               Google 
                          </a>
-          
-          
-                         <button class="ui secondary basic button">
+
+                         <a class="ui secondary basic button" id='emailLinkLogin'>
                               <i class="envelope outline icon"></i>
-                              Email Link
-                         </button>
-          
-          
-                         <button class="ui facebook button">
+                              Google 
+                         </a>    
+                         
+                         <a class="ui facebook button" id='facebookLogin'>
                               <i class="facebook icon"></i>
-                              Facebook
-                         </button>
-          
-          
-                         <button class="ui twitter button">
-                              <i class="twitter icon"></i>
-                              Twitter
-                         </button>
+                              Facebook 
+                         </a>  
+
+                         <a class="ui twitter button" id='twitterLogin'>
+                              <i class="facebook icon"></i>
+                              Twitter 
+                         </a> 
                     </div>
                                         
                     <div class="required field">

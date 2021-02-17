@@ -1,6 +1,5 @@
 const layout = require("./layout");
 const { nameError } = require("../helpers");
-const { googleLogin } = require("../../js/socialLogin");
 
 module.exports = ({ errors, dbError }) => {
   return layout({
@@ -9,7 +8,7 @@ module.exports = ({ errors, dbError }) => {
                <form class="ui form error" method="POST" action="login">
 
                     <div class="field center aligned">
-                         <a class="ui negative basic button" id='googleLogin' onClick='${googleLogin()}  '>
+                         <a class="ui negative basic button">
                               <i class="google  icon"></i>
                               Google 
                          </a>

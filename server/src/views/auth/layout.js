@@ -21,8 +21,7 @@ module.exports = ({ header, content, extraContent }) => {
                                    <div class="content">
                                         <div class="header">${header}</div>
                                    </div>
-                                   <div class="content">
-                                    
+                                   <div class="content">                      
                                         ${content} 
                                    </div> 
                                    <div class="extra content">
